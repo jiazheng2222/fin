@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
+# By jiazheng2222
+# 7 Apr 2017
 
-from matplotlib.dates import date2num
-
-import pandas as pd
 import tushare as ts
 from datetime import date, datetime
 import MySQLdb
@@ -42,6 +41,7 @@ def geneCandidate(dbConn):
             # Sample:
             #('600036', u'招商银行', '3.21', '5.68', '19.01', '18.22', '2017-04-06', '1491478722')
             timeStamp = datetime.now().strftime("%s")
+            print timeStamp
 
             print contractCode, contractName, currentPrice-lastPrice,dailyChange,lastPrice
 
@@ -54,16 +54,16 @@ def geneCandidate(dbConn):
             dailyChange,lastPrice, currentPrice, dateToday, timeStamp))
             dbConn.commit()
 
+def candidate():
+    # create DB connection
+    dbConn = MySQLdb.connect(user=DB_USER,
+                            passwd=DB_PASSWD,
+                            host=DB_HOST,
+                            db=DB_DB)
+    dbConn.set_character_set('utf8')
+    geneCandidate(dbConn)
 
-# create DB connection
-dbConn = MySQLdb.connect(user=DB_USER,
-                        passwd=DB_PASSWD,
-                        host=DB_HOST,
-                        db=DB_DB)
-dbConn.set_character_set('utf8')
-geneCandidate(dbConn)
-
-# close DB
-dbConn.close()
+    # close DB
+    dbConn.close()
 
 
